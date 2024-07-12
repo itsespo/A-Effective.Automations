@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+from database import add_contact, init_db
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -10,8 +12,9 @@ def contact():
     name = request.form['name']
     email = request.form['email']
     message = request.form['message']
-    # Process the data (e.g., save to database or send an email)
+    add_contact(name, email, message)
     return 'Thank you for contacting us, {}!'.format(name)
 
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True)
